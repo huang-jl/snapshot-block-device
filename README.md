@@ -84,3 +84,11 @@ cargo test --test large_device -- --test-threads=1
 ```bash
 cargo test --test incremental_snapshot -- --test-threads=1
 ```
+
+## 第四阶段：限制内存中的数据量
+
+设备逻辑容量仍为 **1 TiB**，累计写入量上限提高到 **1 GiB**。
+本阶段将第二阶段的内存限制调整为：实现自行分配和管理的内存总量不得超过 **128 MiB**，
+包括设备数据、数据副本、缓存、临时缓冲、索引及其他元数据。
+
+设备创建、读写、快照和恢复过程中均需满足该限制。接口、读写语义和增量快照要求保持不变。
